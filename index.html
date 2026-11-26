@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SGIM Yazoo - Solicitudes</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #0f172a; color: #f8fafc; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; text-align: center; }
+    .card { max-width: 420px; background: #1e293b; padding: 24px; border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,.35); }
+    .btn { display: inline-block; margin-top: 14px; padding: 12px 18px; background: #2563eb; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2 id="titulo">SGIM Yazoo</h2>
+    <p id="mensaje">Conectando con el sistema de solicitudes...</p>
+    <a id="enlace" class="btn" href="#" style="display:none;">Abrir formulario de solicitudes</a>
+  </div>
+  <script>
+    fetch("./url.json?t=" + Date.now())
+      .then(r => r.json())
+      .then(data => {
+        if (!data.url) {
+          document.getElementById("mensaje").textContent = "El sistema aún no ha iniciado hoy o está fuera de horario laboral.";
+          return;
+        }
+        const destino = data.url.replace(/\/+$/, "") + "/solicitar";
+        document.getElementById("mensaje").textContent = "Sistema activo. Redirigiendo...";
+        const a = document.getElementById("enlace");
+        a.href = destino;
+        a.style.display = "inline-block";
+        window.location.replace(destino);
+      })
+      .catch(() => {
+        document.getElementById("mensaje").textContent = "No se pudo verificar el estado del sistema. Intenta de nuevo en un momento.";
+      });
+  </script>
+</body>
+</html>
