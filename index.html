@@ -17,9 +17,13 @@
     <a id="enlace" class="btn" href="#" style="display:none;">Abrir formulario de solicitudes</a>
   </div>
   <script>
-    fetch("./url.json?t=" + Date.now())
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+
+    fetch("./url.json?t=" + Date.now(), { cache: "no-store", signal: controller.signal })
       .then(r => r.json())
       .then(data => {
+        clearTimeout(timer);
         if (!data.url) {
           document.getElementById("mensaje").textContent = "El sistema aún no ha iniciado hoy o está fuera de horario laboral.";
           return;
@@ -32,6 +36,7 @@
         window.location.replace(destino);
       })
       .catch(() => {
+        clearTimeout(timer);
         document.getElementById("mensaje").textContent = "No se pudo verificar el estado del sistema. Intenta de nuevo en un momento.";
       });
   </script>
