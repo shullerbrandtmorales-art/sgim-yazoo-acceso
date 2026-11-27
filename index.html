@@ -3,11 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <title>SGIM Yazoo - Solicitudes</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #0f172a; color: #f8fafc; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; text-align: center; }
-    .card { max-width: 420px; background: #1e293b; padding: 24px; border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,.35); }
-    .btn { display: inline-block; margin-top: 14px; padding: 12px 18px; background: #2563eb; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 16px;
+      text-align: center;
+    }
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: #1e293b;
+      padding: 24px;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.35);
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 12px 18px;
+      background: #2563eb;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -28,7 +57,7 @@
           document.getElementById("mensaje").textContent = "El sistema aún no ha iniciado hoy o está fuera de horario laboral.";
           return;
         }
-        const destino = data.url.replace(/\/+$/, "") + "/solicitar";
+        const destino = String(data.url).trim().replace(/\/+$/, "") + "/solicitar";
         document.getElementById("mensaje").textContent = "Sistema activo. Redirigiendo...";
         const a = document.getElementById("enlace");
         a.href = destino;
